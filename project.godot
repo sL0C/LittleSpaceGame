@@ -24,6 +24,10 @@ config/name="Little Space"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+NetworkManager="*res://Managers/NetworkManager.gd"
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
