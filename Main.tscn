@@ -20,23 +20,3 @@ shape = SubResource( 1 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 position = Vector2( -444, -788 )
-mass = 1.0
-rotation_dir = 0.0
-current_dir = Vector2( 0, 0 )
-thrust_strength = 10.0
-run_strength = 25.0
-sneak_strength = 5.0
-turn_strength = 0.005
-health_recovery = 0.5
-health = 100.0
-stamina_recovery = 1.0
-stamina = 100.0
-strain = 0.5
-recovery_cicle = 0.5
-max_speed = 400.0
-max_health = 100.0
-max_stamina = 100.0
-drag_strength = 0.001
-static_friction = 1.0
-kinetic_friction = 4.0
-inertia = 5

@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Space Background.png" type="Texture" id=1]
+
+[node name="NotArena" type="Node2D" groups=["World"]]
+pause_mode = 2
+
+[node name="SpaceBackground" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Players" type="Node" parent="."]
+pause_mode = 1
