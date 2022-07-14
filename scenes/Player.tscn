@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Assets/Potato.png" type="Texture" id=1]
+[ext_resource path="res://Assets/SpaceshipMegapack_SilverCharcoalRed.png" type="Texture" id=1]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Actor
@@ -12,82 +12,48 @@ const UP: = Vector2.UP
 const DOWN: = Vector2.DOWN
 
 func _ready():
-	self.add_to_group(\"player\", true)
+	add_to_group(\"Player\", true)
 
 func _physics_process(_delta):
 	if alive:
-		var key_direction:Vector2 = Vector2.ZERO
-		if Input.is_action_just_pressed(\"run\"):
-			start_running()
-		if Input.is_action_just_released(\"run\"):
-			stop_running()
-		if Input.is_action_just_pressed(\"sneak\"):
-			start_sneaking()
-		if Input.is_action_just_released(\"sneak\"):
-			stop_sneaking()
-		if Input.is_action_just_pressed(\"fire2\"):
-			pass
-		if Input.is_action_just_pressed(\"fire1\"):
-			pass	
-		
-		if Input.is_action_pressed(\"turn_right\"):
-			direction += 0.1
-		elif Input.is_action_pressed(\"turn_left\"):
-			pass
+
+#		if Input.is_action_just_pressed(\"fire2\"):
+#			pass
+#		if Input.is_action_just_pressed(\"fire1\"):
+#			pass	
 			
+		if Input.is_action_pressed(\"turn_right\"):
+			turn_right()
+		elif Input.is_action_pressed(\"turn_left\"):
+			turn_left()
+
 		if Input.is_action_pressed(\"move_forward\"):
-			key_direction += UP
+			give_thrust()
 		elif Input.is_action_pressed(\"move_backward\"):
-			key_direction += DOWN
-
-		activate_thrust(direction)
-		look_at(direction)
-
-		if linear_velocity > 10:
-			if running:
-				if linear_velocity > 50:
-					self.strain_stamina(strain)
-					emit_signal('is_running')
-			elif sneaking:
-				if linear_velocity > 20:
-					emit_signal('is_sneaking')
-			elif walking:
-				if linear_velocity > 35:
-					emit_signal('is_walking')	
+			pass
+		
+		if Input.is_action_just_pressed(\"fire1\"):
+			print(is_on_floor())
+	
 "
 
 [sub_resource type="CapsuleShape2D" id=2]
-radius = 12.9497
-height = 8.0
+radius = 25.0
+height = 0.0
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 64, 64 )
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 32, 32 )
+atlas = SubResource( 4 )
+region = Rect2( 0, 0, 64, 64 )
 
 [node name="Player" type="KinematicBody2D"]
-rotation = -0.769299
 z_index = 1
 script = SubResource( 3 )
-mass = null
-direction = null
-walk_strength = null
-run_strength = null
-sneak_strength = null
-turn_speed = null
-health_recovery = null
-health = null
-stamina_recovery = null
-stamina = null
-strain = null
-recovery_cicle = null
-max_speed = null
-max_health = null
-max_stamina = null
-drag_strength = null
-static_friction = null
-kinetic_friction = null
-inertia = null
 active_drag = false
 active_friction = false
 
@@ -97,10 +63,10 @@ active_friction = false
 current = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-rotation = 0.744273
 shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
+rotation = 1.5708
 texture = SubResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
