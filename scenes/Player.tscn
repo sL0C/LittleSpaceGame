@@ -34,7 +34,6 @@ func _physics_process(_delta):
 		
 		if Input.is_action_just_pressed(\"fire1\"):
 			print(is_on_floor())
-	
 "
 
 [sub_resource type="CapsuleShape2D" id=2]
