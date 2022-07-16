@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Assets/Space Background.png" type="Texture" id=1]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
 
 [node name="NotArena" type="Node2D" groups=["World"]]
 
@@ -11,5 +10,8 @@ centered = false
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="Player" parent="Players" instance=ExtResource( 2 )]
-position = Vector2( 545, 365 )
+[node name="SpawnPointP1" type="Position2D" parent="." groups=["SpawnPoint"]]
+position = Vector2( 1955, 414 )
+
+[node name="SPawnPointP2" type="Position2D" parent="." groups=["SpawnPoint"]]
+position = Vector2( 1203, 409 )
