@@ -20,10 +20,14 @@ export var stamina:float = 100
 export var strain:float = 0.5 			# The amount by which to decrease stamina while running.
 export var recovery_cicle:float = 0.5
 
-export var max_speed:float = 400
+export var max_speed:float = 500
 export var max_health:float = 100
 export var max_stamina:float = 100
-export var max_turn_speed:float = 0.1
+export var max_turn_speed:float = 0.05
+# Camera stuff
+export var origin_zoom:Vector2 = Vector2(0.8, 0.8)
+export var max_zoom:Vector2 = Vector2(2, 2)
+export var zoom_speed:float = 4.0
 
 # Physic Forces
 var linear_velocity = 0
@@ -74,6 +78,7 @@ onready var recovery_timer:Timer = $RecoveryTimer
 #onready var foot_steps:Node2D = $FootSteps
 onready var sprite:Sprite = $Sprite
 onready var collision_polygon:CollisionPolygon2D = $CollisionPolygon2D
+onready var camera:Camera2D = $Camera2D
 
 func _ready():
 	self.add_to_group("Actor")
@@ -90,9 +95,12 @@ func _physics_process(delta:float) -> void:
 	if active_drag: apply_drag()
 
 	update()
-	
 	move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
 	linear_velocity = velocity.length() # Get the linear velocity of the actor
+	
+	# Camera behaviour
+	var current_zoom = linear_velocity / max_speed
+	camera.zoom = origin_zoom.linear_interpolate(max_zoom, current_zoom * zoom_speed)
 	
 	# Collision rule for RigidBodys2D
 	for index in get_slide_count():
@@ -117,21 +125,19 @@ func apply_force(force:Vector2) -> void:
 # VELOCITY & DIRECTION
 func update() -> void:
 	current_dir = Vector2(cos(rotation), sin(rotation))
-	rotation += clamp(rotation_dir, -max_turn_speed, max_turn_speed)
+	rotation_dir = clamp(rotation_dir, -max_turn_speed, max_turn_speed)
+	rotation += rotation_dir
 	velocity += accleration
 	velocity = velocity.limit_length(max_speed)
 	acc_direction = accleration.normalized()
 	vel_direction = velocity.normalized()
 	accleration *= 0 # Reset accleration.
-	
-# FRICTION
-func calc_friction() -> Vector2:
-	if velocity.length() <= static_friction: 
-		return velocity * -1
-	return (velocity.normalized() * -1 * kinetic_friction)
 		 
 func apply_friction() -> void:
-	friction = calc_friction()
+	var friction = .0
+	if velocity.length() <= static_friction: 
+		friction = velocity * -1
+	friction = (velocity.normalized() * -1 * kinetic_friction)
 	apply_force(friction)
 	
 	# DRAG
