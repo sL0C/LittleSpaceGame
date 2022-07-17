@@ -44,15 +44,6 @@ var sneaking = false
 var attacking = false
 
 # Signals
-signal started_walking
-signal stopped_walking
-signal is_walking
-signal started_running
-signal stopped_running
-signal is_running
-signal started_sneaking
-signal stopped_sneaking
-signal is_sneaking
 signal started_attacking
 signal stopped_attacking
 signal damaged(amount)
@@ -79,6 +70,7 @@ onready var recovery_timer:Timer = $RecoveryTimer
 onready var sprite:Sprite = $Sprite
 onready var collision_polygon:CollisionPolygon2D = $CollisionPolygon2D
 onready var camera:Camera2D = $Camera2D
+onready var weapons:Array = $Weapons.get_children()
 
 func _ready():
 	self.add_to_group("Actor")
@@ -87,15 +79,15 @@ func _ready():
 
 	recovery_timer.set_wait_time(recovery_cicle)
 	recovery_timer.start()
-	recovery_timer.connect('timeout', self, 'recover_stamina')
-	recovery_timer.connect('timeout', self, 'recover_health')
+#	recovery_timer.connect('timeout', self, 'recover_stamina')
+#	recovery_timer.connect('timeout', self, 'recover_health')
 
-func _physics_process(delta:float) -> void:
+func _physics_process(delta) -> void:
 	if active_friction: apply_friction()
 	if active_drag: apply_drag()
 
 	update()
-	move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
+	var error = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
 	linear_velocity = velocity.length() # Get the linear velocity of the actor
 	
 	# Camera behaviour
@@ -179,6 +171,10 @@ func fix_diagonal_speed(v:Vector2) -> Vector2:
 # Applies thrust to the current direction of the velocity.
 func give_thrust() -> void:
 	apply_force( current_dir * thrust_strength )
+
+func fire():
+	for weapon in weapons:
+		weapon.fire()
 
 func turn_right() -> void:
 	rotation_dir += turn_strength

@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://assets/SpaceshipMegapack_SilverCharcoalRed.png" type="Texture" id=1]
+[ext_resource path="res://scenes/weapons/Weapon.tscn" type="PackedScene" id=2]
 
 [sub_resource type="GDScript" id=3]
 script/source = "extends Actor
@@ -65,3 +66,7 @@ rotation = 1.5708
 texture = SubResource( 1 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+
+[node name="Weapons" type="Node2D" parent="."]
+
+[node name="Weapon" parent="Weapons" instance=ExtResource( 2 )]

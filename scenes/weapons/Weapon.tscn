@@ -10,8 +10,8 @@ onready var timer:Timer = $Timer
 export var weapon:Resource = null
 export var projectile:Resource = null
 onready var player = get_node(\"../..\")
-onready var projectiles = player.get_node(\"Projectiles\")
 const projectile_scene = preload(\"res://scenes/projectiles/laser/basic_laser.tscn\")
+onready var world_node = get_node(\"/root/World\")
 
 func _ready():
 	timer.autostart = false
@@ -19,13 +19,12 @@ func _ready():
 	timer.wait_time = weapon.firerate
 	
 func fire():
-	print(get_node(\"/root/World\"))
 	if timer.is_stopped():
 		var proj_scene = projectile_scene.instance()
 		proj_scene.global_position = player.global_position
-		projectiles.add_child(proj_scene)
+		world_node.add_child(proj_scene)
 		timer.start()
-		print(\"Fire weapon\")
+		print(\"Fired weapon\")
 "
 
 [node name="Weapon" type="Node2D"]

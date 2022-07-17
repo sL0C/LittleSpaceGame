@@ -13,22 +13,34 @@ _global_script_classes=[ {
 "class": "Actor",
 "language": "GDScript",
 "path": "res://src/actor.gd"
+}, {
+"base": "Resource",
+"class": "Projectile",
+"language": "GDScript",
+"path": "res://src/projectile_res.gd"
+}, {
+"base": "Resource",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://src/weapon_res.gd"
 } ]
 _global_script_class_icons={
-"Actor": ""
+"Actor": "",
+"Projectile": "",
+"Weapon": ""
 }
 
 [application]
 
 config/name="Little Space"
-run/main_scene="res://UI/MainMenu/MainMenu.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Settings="*res://src/settings.gd"
 ImageDatabase="*res://src/image_database.gd"
-NetworkManager="*res://Managers/NetworkManager.gd"
+NetworkManager="res://managers/network_manager.gd"
 
 [display]
 
