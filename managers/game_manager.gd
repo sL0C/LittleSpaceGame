@@ -1,8 +1,11 @@
 extends Node
 
-var player
+var player = null
+var scene_database = null
+var img_database = null
 
 signal player_initialised
+signal databases_initialised
 
 
 func _process(_delta):
@@ -19,12 +22,10 @@ func initialise_player():
 	# Send a signal, when the player is initialised.
 	emit_signal("player_initialised", player)
 
+func initialise_databases():
+	pass
+
 func _init_connections():
 	pass
 	# Connect all ingredients in the tree to the player which are already there.
 #	var ingredients = get_tree().get_nodes_in_group("ingredient")
-	
-# Save the inventory data.
-func _on_player_inventory_changed(inventory):
-	pass
-#	var result = ResourceSaver.save(inventory_data_path, inventory)

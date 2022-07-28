@@ -1,6 +1,5 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://resource/projectiles/basic_laser.tres" type="Resource" id=1]
 [ext_resource path="res://resource/weapons/basic_weapon.tres" type="Resource" id=2]
 
 [sub_resource type="GDScript" id=1]
@@ -8,28 +7,33 @@ script/source = "extends Node2D
 
 onready var timer:Timer = $Timer
 export var weapon:Resource = null
-export var projectile:Resource = null
 onready var player = get_node(\"../..\")
-const projectile_scene = preload(\"res://scenes/projectiles/laser/basic_laser.tscn\")
 onready var world_node = get_node(\"/root/World\")
+onready var projectile_node = get_node(\"/root/World/Projectiles\")
+var projectile_scene = null
 
 func _ready():
+	projectile_scene = SceneDatabase.get_scene(\"BasicLaser\").instance()
+
 	timer.autostart = false
 	timer.one_shot = true
 	timer.wait_time = weapon.firerate
 	
 func fire():
 	if timer.is_stopped():
-		var proj_scene = projectile_scene.instance()
-		proj_scene.global_position = player.global_position
-		world_node.add_child(proj_scene)
+		var new_proj = projectile_scene.duplicate()
+		new_proj.transform = global_transform
+		projectile_node.add_child(new_proj)
+		
 		timer.start()
-		print(\"Fired weapon\")
+		print(\"NumProjectiles:\", projectile_node.get_child_count())
 "
 
 [node name="Weapon" type="Node2D"]
 script = SubResource( 1 )
 weapon = ExtResource( 2 )
-projectile = ExtResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.2
+one_shot = true

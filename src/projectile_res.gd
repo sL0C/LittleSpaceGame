@@ -1,5 +1,5 @@
 extends Resource
-class_name Projectile
+class_name ProjectileRes
 
 export(String) var name = ""
 export(Texture) var texture = null

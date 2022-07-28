@@ -47,7 +47,7 @@ flags = 4
 atlas = SubResource( 4 )
 region = Rect2( 0, 0, 64, 64 )
 
-[node name="Player" type="KinematicBody2D"]
+[node name="Player" type="KinematicBody2D" groups=["Player"]]
 z_index = 1
 script = SubResource( 3 )
 active_drag = false
@@ -68,5 +68,6 @@ texture = SubResource( 1 )
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 
 [node name="Weapons" type="Node2D" parent="."]
+position = Vector2( 23, 0 )
 
 [node name="Weapon" parent="Weapons" instance=ExtResource( 2 )]

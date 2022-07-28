@@ -89,11 +89,7 @@ func _physics_process(delta) -> void:
 	update()
 	var error = move_and_slide(velocity, Vector2.ZERO, false, 4, PI/4, false)
 	linear_velocity = velocity.length() # Get the linear velocity of the actor
-	
-	# Camera behaviour
-	var current_zoom = linear_velocity / max_speed
-	camera.zoom = origin_zoom.linear_interpolate(max_zoom, current_zoom * zoom_speed)
-	
+
 	# Collision rule for RigidBodys2D
 	for index in get_slide_count():
 		var collision = get_slide_collision(index)
