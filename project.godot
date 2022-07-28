@@ -14,8 +14,18 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/actor.gd"
 }, {
-"base": "Resource",
+"base": "Node",
+"class": "Helpers",
+"language": "GDScript",
+"path": "res://src/helpers.gd"
+}, {
+"base": "Area2D",
 "class": "Projectile",
+"language": "GDScript",
+"path": "res://src/projectile.gd"
+}, {
+"base": "Resource",
+"class": "ProjectileRes",
 "language": "GDScript",
 "path": "res://src/projectile_res.gd"
 }, {
@@ -26,21 +36,25 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Actor": "",
+"Helpers": "",
 "Projectile": "",
+"ProjectileRes": "",
 "Weapon": ""
 }
 
 [application]
 
 config/name="Little Space"
-run/main_scene="res://Main.tscn"
+run/main_scene="res://ui/lobby/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-Settings="*res://src/settings.gd"
+Global="*res://src/global.gd"
+NetworkManager="*res://managers/network_manager.gd"
+SceneDatabase="*res://src/scene_database.gd"
 ImageDatabase="*res://src/image_database.gd"
-NetworkManager="res://managers/network_manager.gd"
+Settings="*res://src/settings.gd"
 
 [display]
 
